@@ -7,7 +7,8 @@ verify_ssl = true
 
 [packages]
 opencv-python = "*"
+numpy = "*"
+matplot = "*"
 
 [requires]
 python_version = "3.8"
-platform_architecture_bits = "64bit"

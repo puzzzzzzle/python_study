@@ -1,3 +1,5 @@
 .idea/
 /data/basic.bin
 /logs/**/*
+**/*.pyc
+**/__pycache__
