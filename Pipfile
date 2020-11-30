@@ -10,6 +10,8 @@ opencv-python = "*"
 numpy = "*"
 matplot = "*"
 coverage = "*"
+simplejson = "*"
+scipy = "*"
 
 [requires]
 python_version = "3.8"

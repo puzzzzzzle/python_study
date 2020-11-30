@@ -93,9 +93,7 @@ class BinHolder(object):
         self.data = []
 
     def __str__(self):
-        result = f"head:x{self.x_len},y:{self.y_len},gap:{self.gap},data:{self.data}"
-
-        return result
+        return f"head:x{self.x_len},y:{self.y_len},gap:{self.gap},data:{self.data}"
 
     def rand_data(self):
         for x in range(self.x_len):

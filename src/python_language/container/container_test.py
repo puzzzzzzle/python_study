@@ -1,5 +1,7 @@
 import logging
 import src
+import json
+import random
 
 
 class DataTest(object):
@@ -37,10 +39,60 @@ def list_test():
     for k in map1:
         show_val(k)
         show_val(map1[k])
-    for k,v in map1.items():
+    for k, v in map1.items():
         show_val(k)
         show_val(v)
 
 
+class Child(object):
+    def __init__(self):
+        self.var1 = 1
+        self.var2 = "c"
+        self.var3 = ["cc", 2, "cc"]
+
+
+class ChildEncoder(json.JSONEncoder):
+    def default(self, o):
+        logging.info(f"type(self){type(self)}")
+        logging.info(f"type(o){type(o)}")
+        dic_o = o.__dict__
+        # dic_o["arr4"] = [item for item in o.arr4]
+        return dic_o
+
+
+class Parent(object):
+    def __init__(self):
+        self.var1 = 1
+        self.var2 = "s"
+        self.arr3 = ["s", 2, "ss"]
+        c1 = Child()
+        c2 = Child()
+        arr = [c1, c2]
+        # self.arr4 = [json.dumps(item.__dict__) for item in arr]
+        self.arr4 = arr
+
+
+def dict_test():
+    p = Parent()
+    jstr = json.dumps(p, indent=4, cls=ChildEncoder)
+    logging.info(jstr)
+    load_json = json.loads(jstr)
+    load_p = Parent()
+    load_p.__dict__ = load_json
+    logging.info(json.dumps(load_p, indent=4, cls=ChildEncoder))
+
+    pass
+
+
+def dict_speed_test():
+    d = {}
+    import datetime
+    start = datetime.datetime.now()
+    for i in range(1000000):
+        d[random.random()] = i
+    end = datetime.datetime.now()
+    logging.info(end - start)
+
+
 if __name__ == '__main__':
-    list_test()
+    dict_speed_test()
