@@ -9,6 +9,7 @@ verify_ssl = true
 opencv-python = "*"
 numpy = "*"
 matplot = "*"
+coverage = "*"
 
 [requires]
 python_version = "3.8"
