@@ -24,7 +24,6 @@ def mkdir_recursively(path):
     local_path = path.replace('\\', '/')
 
     path_list = local_path.split('/')
-    print(path_list)
 
     if path_list is None: return path
 
@@ -35,20 +34,16 @@ def mkdir_recursively(path):
     curr_dir = ''
     for path_item in path_list:
         curr_dir = os.path.join(curr_dir, path_item)
-        print(f"dir:{curr_dir}")
         if os.path.exists(curr_dir):
             if os.path.isdir(curr_dir):
-                print(f"mkdir skipped: {curr_dir}, already exist.")
+                pass
             else:  # Maybe a regular file, symlink, etc.
-                print(
-                    f"Invalid directory already exist: {curr_dir}")
                 return False
         else:
             try:
                 os.mkdir(curr_dir)
             except Exception as e:
                 print(f"mkdir error: {curr_dir} {e}")
-            print(f"mkdir ok:{curr_dir}")
 
     return path
 
