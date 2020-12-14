@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 import os
 import time
 import logging
@@ -55,8 +57,7 @@ def __init_logger():
     """
     logger = logging.getLogger()
     logger.setLevel("DEBUG")
-    basic_format = "[%(asctime)s]\t[%(levelname)s]\t%(message)s\t[\"%(pathname)s:%(lineno)s\"]\t\
-    [%(thread)d:%(threadName)s]"
+    basic_format = "[%(asctime)s]\t[%(levelname)s]\t%(message)s\t[\"%(pathname)s:%(lineno)s\"] [%(name)s]"
     date_format = "%Y-%m-%d %H:%M:%S"
     formatter = logging.Formatter(basic_format, date_format)
     # cli
@@ -80,7 +81,9 @@ __init_logger()
 
 logging.info(f"project root dir is {projectDir}")
 logging.info(f">>> import {__file__} at time {time.asctime(time.localtime(time.time()))}")
-
+# 调整 matplot 的log等级
+logging.getLogger('matplotlib').setLevel(logging.WARNING)
+logging.getLogger('numba').setLevel(logging.WARNING)
 
 def auto_run(module, start):
     logging.info(f"__name__ : {module}")
@@ -99,3 +102,19 @@ def auto_run(module, start):
             logging.info(f"call {f}")
             f()
 
+
+_global_dict = {}
+
+
+def set_value(key, value):
+    """ 定义一个全局变量 """
+    global _global_dict
+    _global_dict[key] = value
+
+
+def get_value(key, default=None):
+    """ 获得一个全局变量,不存在则返回默认值 """
+    global _global_dict
+    if key not in _global_dict.keys():
+        return default
+    return _global_dict[key]

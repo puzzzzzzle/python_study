@@ -7,11 +7,12 @@ verify_ssl = true
 
 [packages]
 opencv-python = "*"
-numpy = "*"
+numpy = "==1.19.3"
 matplot = "*"
 coverage = "*"
 simplejson = "*"
 scipy = "*"
+numba = "*"
 
 [requires]
-python_version = "3.8"
+python_version = "3.9"
