@@ -18,13 +18,13 @@ logger = logging.getLogger(__name__)
 
 def _print_transform(func):
     @functools.wraps(func)
-    def print_transform(self, *args, **kwargs):
+    def _wrapper(self, *args, **kwargs):
         logger.info(f"start call !{func.__name__}! transform is \n{self.transform}")
         ret = func(self, *args, **kwargs)
         logger.info(f"end call !{func.__name__}! transform is \n{self.transform}")
         return ret
 
-    return print_transform
+    return _wrapper
 
 
 class PicOperator(object):
@@ -59,7 +59,6 @@ class PicOperator(object):
         out_size.reverse()
         ret = cv2.warpAffine(src_img, temp_transform, tuple(out_size))
         return ret
-
 
     @_print_transform
     def move(self, vec):
@@ -121,7 +120,7 @@ class PicOperator(object):
 
 if __name__ == '__main__':
     pic_path = Path(data_dir) / "data/ignore_file/test1.png"
-    assert pic_path.exists()
+    assert pic_path.exists() and pic_path.is_file()
     src = cv2.imread(str(pic_path), cv2.IMREAD_COLOR)
     oper = PicOperator()
     plt.figure()

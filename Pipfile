@@ -13,6 +13,7 @@ coverage = "*"
 simplejson = "*"
 scipy = "*"
 numba = "*"
+llvmlite = "*"
 
 [requires]
 python_version = "3.9"

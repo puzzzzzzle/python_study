@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "bbaa4af739e436fa47d5608e8040b9d71b5165c3f6616684c385f4c0167fdc9e"
+            "sha256": "d54f954ea34b65cb2fed6d152c4ad3ca422aca49867c490e3b9ff07fa3c019ae"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -174,7 +174,7 @@
                 "sha256:d99059da5630d4c38b155ef0cccd34932a8d16e2c5d18b29ec6d6ec06ef3c8b7",
                 "sha256:f36f1ee5905c5e91254376db7df9163aa7793cfd79220a98ef3c9b59895f0008"
             ],
-            "markers": "python_version >= '3.6'",
+            "index": "pypi",
             "version": "==0.35.0"
         },
         "matplot": {
