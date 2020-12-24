@@ -82,4 +82,4 @@ function(AddDir target)
 endfunction()
 
 AddDir(word)
-#AddDir(word_1)
+AddDir(word_1)
