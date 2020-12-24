@@ -55,9 +55,10 @@ function(AddDir target)
     set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${gen_dir})
     set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${gen_dir})
 
+    message("new at : ${src_dir}")
     include_directories(${src_dir})
     aux_source_directory(${src_dir} cpps)
-
+    message("cpps : ${cpps}")
     # 可执行文件
     if (EXISTS "${CMAKE_SOURCE_DIR}/cpps/${target}/main.cpp")
         add_executable(${target}_exe ${cpps} ${src_dir}/main.cpp)
@@ -67,7 +68,9 @@ function(AddDir target)
     add_library(_${target} SHARED ${cpps} ${cpp_gen})
 
     # swig 动态库
+    #    file(GLOB_RECURSE swig_i "${src_dir}/*.i")
     set(swig_i ${src_dir}/${target}.i)
+    message("swigs : ${swig_i}")
     SET_SOURCE_FILES_PROPERTIES(${swig_i} PROPERTIES CPLUSPLUS ON)
     #    SET_SOURCE_FILES_PROPERTIES(${swig_i} PROPERTIES SWIG_FLAGS "-includeall")
     SET_SOURCE_FILES_PROPERTIES(${swig_i} PROPERTIES SWIG_FLAGS "-py3")
@@ -82,4 +85,4 @@ function(AddDir target)
 endfunction()
 
 AddDir(word)
-AddDir(word_1)
+#AddDir(word_1)
