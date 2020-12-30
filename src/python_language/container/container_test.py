@@ -1,8 +1,9 @@
 import logging
-import src
+import collections
+
 import json
 import random
-
+import consts
 
 class DataTest(object):
     def __init__(self, name):
@@ -94,5 +95,11 @@ def dict_speed_test():
     logging.info(end - start)
 
 
+def named_test():
+    Point3D = collections.namedtuple("Point3D", ["x", "y", "z"])
+    p = Point3D(3, 4, 5)
+    logging.info(p)
+
+
 if __name__ == '__main__':
-    dict_speed_test()
+    named_test()

@@ -1,6 +1,6 @@
 import time
 import logging
-import src as project
+import consts  as project
 
 __all__=["l3_pack1_py1"]
 

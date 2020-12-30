@@ -1,4 +1,4 @@
-import src
+import consts
 import os
 import mmap
 import pathlib
@@ -103,7 +103,7 @@ class BinHolder(object):
 
 
 if __name__ == '__main__':
-    file_name = str(pathlib.Path(src.projectDir) / "data" / "basic.bin")
+    file_name = str(pathlib.Path(consts.projectDir) / "data" / "basic.bin")
     bin_file = BinHolder()
     bin_file.clear(15, 10, 2)
     bin_file.rand_data()

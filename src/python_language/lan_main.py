@@ -1,6 +1,6 @@
 import logging
-import src as project
+import consts
 
 
 if __name__ == '__main__':
-    logging.info(f"project root is {project.projectDir}")
+    logging.info(f"project root is {consts.projectDir}")

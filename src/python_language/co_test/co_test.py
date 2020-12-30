@@ -1,4 +1,4 @@
-import src
+import consts
 import asyncio
 import time
 from logging import *
