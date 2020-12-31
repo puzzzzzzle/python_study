@@ -20,6 +20,9 @@ Mako = "*"
 pandas = "*"
 # pyinstaller = "*"
 PyYAML = "*"
+flask = "*"
+aiohttp = "*"
+Django = "*"
 
 [requires]
 python_version = "3.9"
