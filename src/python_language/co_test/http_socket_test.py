@@ -1,9 +1,6 @@
 import time
 import logging
 import consts
-import asyncio
-import aiohttp
-import random
 import socket
 import time
 from selectors import DefaultSelector, EVENT_READ, EVENT_WRITE
