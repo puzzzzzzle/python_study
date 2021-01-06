@@ -1,7 +1,7 @@
 [[source]]
-name = "pypi"
 url = "https://pypi.org/simple"
 verify_ssl = true
+name = "pypi"
 
 [dev-packages]
 
@@ -23,6 +23,6 @@ PyYAML = "*"
 flask = "*"
 aiohttp = "*"
 Django = "*"
-
+sqlite3 = "*"
 [requires]
 python_version = "3.9"
