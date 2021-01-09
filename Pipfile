@@ -25,5 +25,10 @@ aiohttp = "*"
 Django = "*"
 pytest = "*"
 
+Flask-RESTful = "*"
+python-simplexml = "*"
+redis = "*"
+flask-redis = "*"
+
 [requires]
 python_version = "3.9"
