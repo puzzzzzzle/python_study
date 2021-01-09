@@ -1,0 +1,5 @@
+curl -X PUT -H 'Content-Type:application/json' http://127.0.0.1:5000/todos/toso_2 -d '{"task":"new 2"}'
+
+curl -X GET http://127.0.0.1:5000/todos
+
+curl -X POST -H 'Content-Type:application/json' http://127.0.0.1:5000/todos -d '{"task":"new unknown"}'
