@@ -6,10 +6,12 @@ import logging
 from pathlib import Path
 import sys
 
-__all__ = [""]
-
 sourceDir = os.path.abspath(os.path.dirname(os.path.abspath(__file__)))
 projectDir = os.path.abspath(Path(sourceDir))
+
+
+def get_logger(name):
+    return logging.getLogger(name)
 
 
 def mkdir_recursively(path):
@@ -84,6 +86,7 @@ logging.info(f">>> import {__file__} at time {time.asctime(time.localtime(time.t
 # 调整 matplot 的log等级
 logging.getLogger('matplotlib').setLevel(logging.WARNING)
 logging.getLogger('numba').setLevel(logging.WARNING)
+
 
 def auto_run(module, start):
     logging.info(f"__name__ : {module}")
