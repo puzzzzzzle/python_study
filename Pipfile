@@ -6,29 +6,44 @@ name = "pypi"
 [dev-packages]
 
 [packages]
-opencv-python = "*"
-numpy = "==1.19.3"
-matplot = "*"
-coverage = "*"
-simplejson = "*"
+
+# scipy
+numpy = "*"
 scipy = "*"
+Matplotlib = "*"
+matplot = "*"
+SymPy = "*"
+pandas = "*"
+
+# opencv
+opencv-python = "*"
+
+#numba
 numba = "*"
 llvmlite = "*"
-HTMLTestRunner-Python3 = "*"
-sh = "*"
-Mako = "*"
-pandas = "*"
-# pyinstaller = "*"
-PyYAML = "*"
+
+# server
 flask = "*"
 aiohttp = "*"
 Django = "*"
-pytest = "*"
-
 Flask-RESTful = "*"
 python-simplexml = "*"
 redis = "*"
 flask-redis = "*"
+Mako = "*"
+
+# test
+pytest = "*"
+coverage = "*"
+
+# sh tools
+sh = "*"
+
+# yaml
+PyYAML = "*"
+
+# package
+# pyinstaller = "*"
 
 [requires]
 python_version = "3.9"
