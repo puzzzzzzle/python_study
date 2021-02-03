@@ -18,6 +18,12 @@ class Ui_TestMainWindow(object):
         self.close_btn = QtWidgets.QPushButton(TestMainWindow)
         self.close_btn.setGeometry(QtCore.QRect(310, 250, 75, 23))
         self.close_btn.setObjectName("close_btn")
+        self.show_info = QtWidgets.QPushButton(TestMainWindow)
+        self.show_info.setGeometry(QtCore.QRect(80, 190, 75, 23))
+        self.show_info.setObjectName("show_info")
+        self.run_btn = QtWidgets.QPushButton(TestMainWindow)
+        self.run_btn.setGeometry(QtCore.QRect(490, 130, 121, 31))
+        self.run_btn.setObjectName("run_btn")
 
         self.retranslateUi(TestMainWindow)
         QtCore.QMetaObject.connectSlotsByName(TestMainWindow)
@@ -26,3 +32,5 @@ class Ui_TestMainWindow(object):
         _translate = QtCore.QCoreApplication.translate
         TestMainWindow.setWindowTitle(_translate("TestMainWindow", "kahlid测试中英文"))
         self.close_btn.setText(_translate("TestMainWindow", "关闭"))
+        self.show_info.setText(_translate("TestMainWindow", "弹对话框"))
+        self.run_btn.setText(_translate("TestMainWindow", "开启一个新线程"))

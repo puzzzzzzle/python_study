@@ -76,13 +76,12 @@ def __init_logger():
     all_log = logging.FileHandler(f"{base_log_dir}/curr.log", "w")
     all_log.setFormatter(formatter)
     logger.addHandler(all_log)
-    logging.info(f"log init at {time.asctime(time.localtime(time.time()))}")
 
 
 __init_logger()
 
-logging.info(f"project root dir is {projectDir}")
-logging.info(f">>> import {__file__} at time {time.asctime(time.localtime(time.time()))}")
+# logging.info(f"project root dir is {projectDir}")
+# logging.info(f">>> import {__file__} at time {time.asctime(time.localtime(time.time()))}")
 # 调整 matplot 的log等级
 logging.getLogger('matplotlib').setLevel(logging.WARNING)
 logging.getLogger('numba').setLevel(logging.WARNING)
