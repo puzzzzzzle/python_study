@@ -36,7 +36,9 @@ if __name__ == '__main__':
 
     tasks = [(f"name_{x}", q, v) for x in range(6)]
     p.apply_async(c, (q, v))
-    p.starmap(f, tasks)
+    p.starmap_async(f, tasks)
 
+    logger.info(f"wait for all done")
     p.close()
     p.join()
+    logger.info(f"end all")
