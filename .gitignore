@@ -9,3 +9,4 @@ cpp_code/cpp_gen
 **/cmake-build-release
 **/build
 /instance
+cpp

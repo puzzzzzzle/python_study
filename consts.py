@@ -33,9 +33,16 @@ def mkdir_recursively(path):
 
     # For windows, we should add the '\\' at the end of disk name. e.g. C: -> C:\\
     disk_name = path_list[0]
-    if len(disk_name) >= 1 and disk_name[1] == ':': path_list[0] = path_list[0] + '\\'
 
-    curr_dir = ''
+    import platform
+    if len(disk_name) >= 1 and disk_name[1] == ':':
+        assert platform.system().lower() == 'windows'
+        path_list[0] = path_list[0] + '\\'
+    else:
+        assert path.startswith("/")
+        path_list[0] = "/"
+
+    curr_dir = '/'
     for path_item in path_list:
         curr_dir = os.path.join(curr_dir, path_item)
         if os.path.exists(curr_dir):

@@ -5,7 +5,7 @@ import logging
 logger = logging.getLogger(__name__)
 if __name__ == '__main__':
     logger.info("start")
-    import cpp_code.cpp_gen.word.word as cpp_word
+    import cpp.template.word.word as cpp_word
     p = cpp_word.word("cpp test")
     # p = cpp_word("hello cpp")
     logger.info(f"from cpp {p.getWord()}")

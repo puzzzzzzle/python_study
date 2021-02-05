@@ -1,4 +1,4 @@
-/*--- File: temp.i ---*/
+/*--- File: template.i ---*/
 
 %module word
 %{
