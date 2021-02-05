@@ -34,10 +34,15 @@ add_definitions(-DSWIG_PYTHON_INTERPRETER_NO_DEBUG)
 FIND_PACKAGE(SWIG REQUIRED)
 INCLUDE(${SWIG_USE_FILE})
 
-find_package(Python REQUIRED COMPONENTS Interpreter Development)
-message("inc:\t${Python_INCLUDE_DIRS} \tlibs:\t${Python_LIBRARIES} \tlinked:\t${Python_LIBRARY} \t${Python_LIBRARY_DIRS}")
-include_directories(${Python_INCLUDE_DIRS})
-link_directories(${Python_LIBRARY_DIRS})
+find_package(PythonLibs REQUIRED COMPONENTS Interpreter Development)
+message("${PYTHONLIBS_FOUND}")
+message("${PYTHON_LIBRARIES}")
+message("${PYTHON_INCLUDE_DIRS}")
+message("${PYTHONLIBS_VERSION_STRING}")
+message("${PYTHON_LIBRARY}")
+message("${PYTHON_INCLUDE_DIR}")
+
+include_directories(${PYTHON_INCLUDE_DIRS})
 
 
 # 开始加载
