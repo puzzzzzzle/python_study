@@ -63,9 +63,7 @@ function(AddDir target)
     if (EXISTS "${CMAKE_SOURCE_DIR}/cpps/${target}/main.cpp")
         add_executable(${target}_exe ${cpps} ${src_dir}/main.cpp)
     endif ()
-    #通用动态链接库
     aux_source_directory(${gen_dir} cpp_gen)
-    add_library(_${target} SHARED ${cpps} ${cpp_gen})
 
     # swig 动态库
     #    file(GLOB_RECURSE swig_i "${src_dir}/*.i")
@@ -85,4 +83,4 @@ function(AddDir target)
 endfunction()
 
 AddDir(word)
-#AddDir(word_1)
+AddDir(word_1)
