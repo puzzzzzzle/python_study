@@ -10,3 +10,4 @@ cpp_code/cpp_gen
 **/build
 /instance
 cpp
+*.pyc
