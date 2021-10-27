@@ -17,7 +17,7 @@ mat[190:200, 0:10] = (0, 0, 0)
 # cv2.circle(mat, (100, 300), 5, (0, 0, 0), -1)
 cv2.circle(mat, (300, 100), 5, (0, 0, 0), -1)
 
-cv2.imshow("1", mat)
+# cv2.imshow("1", mat)
 
 
 # 标准第一象限坐标系 与 np 坐标系 转换
@@ -44,7 +44,7 @@ assert p1 == pos_quartile_np(pos_quartile_np(p1, mat.shape, True), mat.shape, Fa
 # cv格式的可以来回转
 assert p1 == pos_quartile_cv(pos_quartile_cv(p1, mat.shape), mat.shape)
 
-mat[:, :] = (255, 255, 255)
+# mat[:, :] = (255, 255, 255)
 # 使用cv画
 cv2.circle(mat, pos_quartile_cv(p1, mat.shape), 5, (0, 0, 0), -1)
 # 使用np画(np的向上+10 吧, 不然重叠了)
