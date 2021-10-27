@@ -1,8 +1,8 @@
 import cv2
 import numpy as np
 
-# shape : row column dimension
-# shape : row : y方向 高度, column: x轴方向, 宽度, dimension: 维度数
+# shape : row column color
+# shape : row : y方向 高度, column: x轴方向, 宽度, color: 颜色宽度
 mat = np.empty((200, 400, 3))
 mat[:, :] = (255, 255, 255)
 
