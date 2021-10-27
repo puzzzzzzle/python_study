@@ -45,6 +45,7 @@ PyYAML = "*"
 # package
 # pyinstaller = "*"
 
+libclang = "*"
 # gui
 PyQt5 = "*"
 [requires]

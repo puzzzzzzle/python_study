@@ -21,7 +21,7 @@ draw_lines()
 def draw_math():
     fig, ax = plt.subplots()  # type:plt.Figure,plt.Axes
     ax.set_title(f"draw_math {time.asctime()}")
-    x = np.arange(-100, 100)
+    x = np.arange(-100, 100) # step 默认为1
     y = x**3
     ax.plot(x, y, "o")
 
