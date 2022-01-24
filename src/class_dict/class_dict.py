@@ -52,8 +52,22 @@ class Storage(dict):
         """
         return '<Storage ' + dict.__repr__(self) + '>'
 
+class Base:
+    def name(self):
+        return self.__class__.__name__
+    def id(self):
+        return 0
+class Stub(Base):
+
+    def id(self):
+        return 1
 
 if __name__ == '__main__':
+    b = Base()
+    s = Stub()
+    print(f"{b.name()}  {b.id()}")
+    print(f"{s.name()}  {s.id()}")
+
     d = Storage()
     d.a = "aha"
     print(f"d.a {d.a}  d['a']: {d['a']}")
