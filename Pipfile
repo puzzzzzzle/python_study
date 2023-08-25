@@ -13,14 +13,11 @@ Matplotlib = "*"
 matplot = "*"
 SymPy = "*"
 pandas = "*"
-
 # opencv
 opencv-python = "*"
-
 #numba
 #numba = "*"
 #llvmlite = "*"
-
 # server
 flask = "*"
 aiohttp = "*"
@@ -30,22 +27,20 @@ python-simplexml = "*"
 redis = "*"
 flask-redis = "*"
 Mako = "*"
-
 # test
 pytest = "*"
 coverage = "*"
-
 # sh tools
 sh = "*"
-
 # yaml
 PyYAML = "*"
-
 # package
 # pyinstaller = "*"
-
 libclang = "*"
 # gui
 PyQt5 = "*"
+qasync = "*"
+pyqt5-stubs = "==5.15.6.0"
+
 [requires]
 python_version = ">=3.9"
