@@ -4,7 +4,8 @@ import time
 
 import aiohttp
 from qasync import QEventLoop, asyncSlot
-from PyQt5.QtWidgets import QApplication, QMainWindow, QLabel, QVBoxLayout, QWidget, QPushButton
+from PyQt5.QtWidgets import QApplication, QMainWindow, QLabel, QVBoxLayout, QWidget, QPushButton, QPlainTextEdit, \
+    QLineEdit
 
 
 async def fetch(url):
@@ -20,9 +21,14 @@ class MainWindow(QMainWindow):
         self.setWindowTitle("AsyncUIExample")
 
         layout = QVBoxLayout()
+        layout.addWidget(QLabel("Click 'Fetch' to start."))
 
-        self.result_label = QLabel("Click 'Fetch' to start.")
-        layout.addWidget(self.result_label)
+        self.url_text = QLineEdit()
+        self.url_text.setText("http://www.baidu.com/")
+        layout.addWidget(self.url_text)
+
+        self.result_text = QPlainTextEdit()
+        layout.addWidget(self.result_text)
 
         fetch_button = QPushButton("Fetch")
         fetch_button.clicked.connect(self.fetch_data)
@@ -35,9 +41,10 @@ class MainWindow(QMainWindow):
 
     @asyncSlot()
     async def fetch_data(self):
-        url = "https://jsonplaceholder.typicode.com/todos/1"
+        url = self.url_text.text()
+        print(f"get data {url}")
         data = await fetch(url)
-        self.result_label.setText(data)
+        self.result_text.setPlainText(data)
 
 
 def main():
