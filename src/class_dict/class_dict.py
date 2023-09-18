@@ -1,49 +1,54 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+# @Author  : khalidzhang
+# @Content : 通过.号访问的Storage
+from copy import deepcopy
+
+
+def _dict_to_storage(arg):
+    result = None
+    if isinstance(arg, dict):
+        result = Storage()
+        for k, v in arg.items():
+            result[k] = _dict_to_storage(v)
+    elif isinstance(arg, list):
+        result = []
+        for v in arg:
+            result.append(_dict_to_storage(v))
+    else:
+        result = arg
+    return result
+
+
+
 class Storage(dict):
-    """
-    A Storage object is like a dictionary except `obj.foo` can be used
-    in addition to `obj['foo']`.
-        定义一个容器，可以使用obj.foo的方式来访问其间的数据，实际继承自字典dict
-        >>> o = storage(a=1)
-        >>> o.a
-        1
-        >>> o['a']
-        1
-        >>> o.a = 2
-        >>> o['a']
-        2
-        >>> del o.a
-        >>> o.a
-        Traceback (most recent call last):
-            ...
-        AttributeError: 'a'
+    def __init__(self, *args, **kwargs):
+        super(Storage, self).__init__(*args, **kwargs)
+        for arg in args:
+            if isinstance(arg, dict):
+                for k, v in arg.items():
+                    self[k] = v
 
-    """
+        if kwargs:
+            for k, v in kwargs.items():
+                self[k] = v
 
-    def __getattr__(self, key):
-        """
-        通过"."读取某个key的值
-        :param key:
-        :return:
-        """
-        return self[key]
+    def __getattr__(self, attr):
+        return self.get(attr)
 
     def __setattr__(self, key, value):
-        """
-        通过"."设置某个key的值
-        :param key:
-        :param value:
-        :return:
-        """
-        self[key] = value
+        self.__setitem__(key, value)
 
-    def __delattr__(self, key):
-        """
-        删除属性
-        :param key:
-        :return:
-        """
-        if key in self:
-            del self[key]
+    def __setitem__(self, key, value):
+        super(Storage, self).__setitem__(key, value)
+        self.__dict__.update({key: value})
+
+    def __delattr__(self, item):
+        self.__delitem__(item)
+
+    def __delitem__(self, key):
+        super(Storage, self).__delitem__(key)
+        del self.__dict__[key]
 
     def __repr__(self):
         """
@@ -52,22 +57,19 @@ class Storage(dict):
         """
         return '<Storage ' + dict.__repr__(self) + '>'
 
-class Base:
-    def name(self):
-        return self.__class__.__name__
-    def id(self):
-        return 0
-class Stub(Base):
+    def __deepcopy__(self, memo=None, _nil=None):
+        if _nil is None:
+            _nil = []
+        if memo is None:
+            memo = {}
+        d = id(self)
+        y = memo.get(d, _nil)
+        if y is not _nil:
+            return y
 
-    def id(self):
-        return 1
-
-if __name__ == '__main__':
-    b = Base()
-    s = Stub()
-    print(f"{b.name()}  {b.id()}")
-    print(f"{s.name()}  {s.id()}")
-
-    d = Storage()
-    d.a = "aha"
-    print(f"d.a {d.a}  d['a']: {d['a']}")
+        new_obj = Storage()
+        memo[d] = id(new_obj)
+        for key in self.keys():
+            new_obj.__setattr__(deepcopy(key, memo),
+                                deepcopy(self.__getattr__(key), memo))
+        return new_obj
