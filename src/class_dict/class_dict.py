@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-# @Author  : khalidzhang
+# @Author  : puzzzzzzle
 # @Content : 通过.号访问的Storage
 from copy import deepcopy
 
@@ -18,7 +18,6 @@ def _dict_to_storage(arg):
     else:
         result = arg
     return result
-
 
 
 class Storage(dict):
