@@ -16,7 +16,7 @@ pandas = "*"
 # opencv
 opencv-python = "*"
 #numba
-#numba = "*"
+numba = "*"
 #llvmlite = "*"
 # server
 flask = "*"
