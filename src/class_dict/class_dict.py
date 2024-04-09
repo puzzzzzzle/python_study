@@ -7,9 +7,14 @@ class Storage(dict):
     """
     let dict support d.var=1, d.var, del d.var
 
-    test merge from dict:
+    test merge from dict, only trans top level dict:
     >>> data = {"var1":11,"var2":22,"d1":{"var1":33}}
     >>> s1 = Storage(data)
+    >>> print(s1)
+    <Storage {'var1': 11, 'var2': 22, 'd1': {'var1': 33}}>
+
+    test from_dict, trans all level of dict:
+    >>> s1 = Storage.from_dict(data)
     >>> print(s1)
     <Storage {'var1': 11, 'var2': 22, 'd1': <Storage {'var1': 33}>}>
 
@@ -33,16 +38,17 @@ class Storage(dict):
     """
 
     def __init__(self, *args, **kwargs):
+        """
+        只把顶层的dict转为Storage
+        """
         super(Storage, self).__init__(*args, **kwargs)
-        for key, value in self.items():
-            if isinstance(value, dict):
-                self[key] = Storage(value)
 
     def __getattr__(self, attribute):
         try:
             return self[attribute]
         except KeyError:
             raise AttributeError(f"No such attribute: {attribute}")
+            # return None
 
     def __setattr__(self, attribute, value):
         self[attribute] = value
@@ -60,18 +66,20 @@ class Storage(dict):
         """
         return '<Storage ' + dict.__repr__(self) + '>'
 
-    def _deepcopy(self):
-        import copy
-        new_dict = Storage()
-        for key, value in self.items():
-            if isinstance(value, Storage):
-                new_dict[key] = value._deepcopy()
-            else:
-                new_dict[key] = copy.deepcopy(value)
-        return new_dict
-
-    def __deepcopy__(self, memodict):
-        return self._deepcopy()
+    @classmethod
+    def from_dict(cls, data):
+        """
+        递归的, 把所有dict, Storage, list 中的元素转为Storage
+        """
+        if isinstance(data, dict):
+            storage_data = Storage(data)
+            for key, value in storage_data.items():
+                storage_data[key] = cls.from_dict(value)
+            return storage_data
+        elif isinstance(data, list):
+            return [cls.from_dict(item) for item in data]
+        else:
+            return data
 
 
 if __name__ == '__main__':
