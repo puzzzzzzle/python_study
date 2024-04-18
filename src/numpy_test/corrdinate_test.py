@@ -5,7 +5,7 @@ import numpy as np
 # 因此，在使用OpenCV函数（如cv2.circle）绘制图像时，需要注意坐标的顺序是(x, y)，即列在前，行在后。而在使用NumPy处理图像时，需要注意索引的顺序是[行，列]。
 # 但是cv2 imread返回的是np的ndarray的格式, 那么要使用行列方式访问
 
-# 总结下为: cv读取的图像/计算产生的各种坐标图像(distance_transform_edt的indices等), np创建的数组等待, 都是行列式的访问方式, 只有cv提供的部分画图函数cv2.circle,text等, 要使用x,y的方式
+# 总结下为: cv读取的图像/计算产生的各种坐标图像(distance_transform_edt的indices等), np创建的数组等等, 都是行列式的访问方式, 只有cv提供的部分画图函数cv2.circle,text等, 要使用x,y的方式
 
 # shape : row(行) column(列) color
 # shape : row : y方向 高度, column: x轴方向, 宽度, color: 颜色宽度
