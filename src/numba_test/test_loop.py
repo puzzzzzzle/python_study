@@ -44,11 +44,14 @@ if __name__ == '__main__':
     logger.info("start")
     arr = np.arange(100000)
     time_call(loop_local,arr)
+    time_call(loop_local,arr)
+    # 第一次要编译
     time_call(loop_ba,arr)
+    # 第二次使用编译缓存
     time_call(loop_ba,arr)
     code = loop_ba.inspect_llvm()
     import pprint
-    pprint.pprint(code)
+    # pprint.pprint(code)
     with open("test.ir","wt") as f:
         for k, v in code.items():
             f.write(v)

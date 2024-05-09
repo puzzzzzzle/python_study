@@ -41,6 +41,7 @@ libclang = "*"
 PyQt5 = "*"
 qasync = "*"
 pyqt5-stubs = "==5.15.6.0"
+jupyter = "*"
 
 [requires]
 python_version = ">=3.9"
