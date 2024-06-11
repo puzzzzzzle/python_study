@@ -22,7 +22,7 @@ class MyMetaClass(type):
         """
         这里cls 是 具体的子类的类型, 不是self, 比较特殊
         这里还在创建类型, 并不涉及具体子类对象的创建
-        所以只要类型import了, 就会管理
+        所以只要模块import了, 就会管理
         """
         print(f"will init {cls} {name} {bases} {kwds}")
         MyMetaClass.managed_classes.append(cls.__name__)
