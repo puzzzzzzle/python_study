@@ -1,0 +1,10 @@
+*.pyd
+*.so
+*.dll
+*.o
+*.obj
+*.exp
+*.lib
+
+auto_build/Release
+auto_build/cffi_test_lib.c
