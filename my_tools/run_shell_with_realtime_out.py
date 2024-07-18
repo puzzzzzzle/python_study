@@ -36,68 +36,79 @@ def print_out_put(outs: list, output):
         logger.error(f"print out fail, ignore")
 
 
-def _read_realtime_out_unix(process):
+# def _read_realtime_out_unix(process):
+#     outs = []
+#     print_out = partial(print_out_put, outs)
+#     # 实时读取输出
+#     while True:
+#         reads = [process.stdout.fileno(), process.stderr.fileno()]
+#         ret = select.select(reads, [], [])
+#
+#         for fd in ret[0]:
+#             if fd == process.stdout.fileno():
+#                 output = process.stdout.readline()
+#                 print_out(output)
+#             if fd == process.stderr.fileno():
+#                 error_output = process.stderr.readline()
+#                 print_out(error_output)
+#
+#         if process.poll() is not None:
+#             break
+#     return outs
+#
+#
+# def _read_output_windows(pipe, print_out, lock):
+#     """
+#     windows 没有非阻塞的读取函数, 只能用线程模拟
+#     """
+#     while True:
+#         line = pipe.readline()
+#         if not line:
+#             break
+#         # 多个线程竞争一个outs和输出机会, 改为加锁串行
+#         with lock:
+#             print_out(line)
+#
+#
+# def _read_real_time_out_windows(process):
+#     import threading
+#
+#     outs = []
+#     lock = threading.Lock()
+#     print_out = partial(print_out_put, outs)
+#
+#     # 创建线程分别读取标准输出和标准错误输出
+#     stdout_thread = threading.Thread(target=_read_output_windows, args=(process.stdout, print_out, lock))
+#     stderr_thread = threading.Thread(target=_read_output_windows, args=(process.stderr, print_out, lock))
+#
+#     # 启动线程
+#     stdout_thread.start()
+#     stderr_thread.start()
+#
+#     # 等待线程结束
+#     stdout_thread.join()
+#     stderr_thread.join()
+#
+#     return outs
+#
+#
+# def read_real_time_out(process):
+#     if platform.system().lower() == 'windows':
+#         return _read_real_time_out_windows(process)
+#     else:
+#         return _read_realtime_out_unix(process)
+
+def read_real_time_out(pipe):
     outs = []
     print_out = partial(print_out_put, outs)
-    # 实时读取输出
+
+    # 读取输出
     while True:
-        reads = [process.stdout.fileno(), process.stderr.fileno()]
-        ret = select.select(reads, [], [])
-
-        for fd in ret[0]:
-            if fd == process.stdout.fileno():
-                output = process.stdout.readline()
-                print_out(output)
-            if fd == process.stderr.fileno():
-                error_output = process.stderr.readline()
-                print_out(error_output)
-
-        if process.poll() is not None:
+        output = pipe.readline()
+        if not output:
             break
+        print_out(output)
     return outs
-
-
-def _read_output_windows(pipe, print_out, lock):
-    """
-    windows 没有非阻塞的读取函数, 只能用线程模拟
-    """
-    while True:
-        line = pipe.readline()
-        if not line:
-            break
-        # 多个线程竞争一个outs和输出机会, 改为加锁串行
-        with lock:
-            print_out(line)
-
-
-def _read_real_time_out_windows(process):
-    import threading
-
-    outs = []
-    lock = threading.Lock()
-    print_out = partial(print_out_put, outs)
-
-    # 创建线程分别读取标准输出和标准错误输出
-    stdout_thread = threading.Thread(target=_read_output_windows, args=(process.stdout, print_out, lock))
-    stderr_thread = threading.Thread(target=_read_output_windows, args=(process.stderr, print_out, lock))
-
-    # 启动线程
-    stdout_thread.start()
-    stderr_thread.start()
-
-    # 等待线程结束
-    stdout_thread.join()
-    stderr_thread.join()
-
-    return outs
-
-
-def read_real_time_out(process):
-    if platform.system().lower() == 'windows':
-        return _read_real_time_out_windows(process)
-    else:
-        return _read_realtime_out_unix(process)
-
 
 def run_shell_command(command, env_vars=None, cwd=None):
     logging.debug(f"will run : {command} ; env : {env_vars} at {cwd}")
@@ -109,10 +120,10 @@ def run_shell_command(command, env_vars=None, cwd=None):
     if env_vars:
         env.update(env_vars)
 
-    # 启动子进程
-    process = subprocess.Popen(command, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE, env=env, cwd=cwd)
+    # 启动子进程, 为了方便Windows使用, stderr 重定向到 stdout
+    process = subprocess.Popen(command, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, env=env, cwd=cwd)
     # 获取实时输出
-    outs = read_real_time_out(process)
+    outs = read_real_time_out(process.stdout)
     # 确保子进程资源被正确释放
     process.wait()
 
@@ -122,3 +133,9 @@ def run_shell_command(command, env_vars=None, cwd=None):
     if return_code != 0:
         raise RuntimeError(f"shell run fail with exit code {return_code}")
     return outs
+
+if __name__ == '__main__':
+    if platform.system().lower() == 'windows':
+        run_shell_command("dir")
+    else:
+        run_shell_command("ls -al")
