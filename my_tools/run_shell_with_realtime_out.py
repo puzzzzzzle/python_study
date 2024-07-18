@@ -29,7 +29,7 @@ def _print_out_put(outs: list, output):
     outs.append(decoded_output)
 
 
-def print_out_put(outs: list, output):
+def print_out_put_no_except(outs: list, output):
     try:
         _print_out_put(outs, output)
     except Exception as e:
@@ -100,7 +100,7 @@ def print_out_put(outs: list, output):
 
 def read_real_time_out(pipe):
     outs = []
-    print_out = partial(print_out_put, outs)
+    print_out = partial(print_out_put_no_except, outs)
 
     # 读取输出
     while True:
