@@ -22,7 +22,7 @@ a2 = {"aa": 55, "bb": 66}
 arg_raw(2, a1, a2)
 # var 3 *args (3.14, 'ss', {'aa': 55, 'bb': 66}) **kwargs{}
 arg_raw(3, *a1, a2)
-# var 4 *args (3.14, 'ss', {'aa': 55, 'bb': 66}) **kwargs{}
-arg_raw(4, *a1, a2)
+# var 4 *args (3.14, 'ss', 'aa', 'bb') **kwargs{}
+arg_raw(4, *a1, *a2)
 # var 5 *args (3.14, 'ss') **kwargs{'aa': 55, 'bb': 66}
 arg_raw(5, *a1, **a2)
