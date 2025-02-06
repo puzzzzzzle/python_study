@@ -43,5 +43,7 @@ qasync = "*"
 pyqt5-stubs = "==5.15.6.0"
 jupyter = "*"
 fastapi = "*"
+
+fire= "*"
 [requires]
 python_version = ">=3.9"
