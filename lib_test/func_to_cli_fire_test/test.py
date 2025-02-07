@@ -9,6 +9,10 @@ class Calculator(object):
     """A simple calculator class."""
 
     def double(self, number):
+        """
+        double number
+        :param number: number
+        """
         return 2 * number
 
     def triple(self, number):
