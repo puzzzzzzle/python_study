@@ -1,0 +1,46 @@
+[project]
+name = "python-study"
+version = "0.1.0"
+description = "Add your description here"
+requires-python = ">=3.11"
+dependencies = [
+    # scipy
+    "numpy",
+    "scipy",
+    "Matplotlib",
+    "matplot",
+    "SymPy",
+    "pandas",
+    # opencv
+    "opencv-python",
+    #numba
+    "numba",
+    # server
+    "flask",
+    "aiohttp",
+    "Django",
+    "Flask-RESTful",
+    "python-simplexml",
+    "redis",
+    "flask-redis",
+    "Mako",
+    # test
+    "pytest",
+    "coverage",
+    # sh tools
+    "sh",
+    # yaml
+    "PyYAML",
+    # package
+    "pyinstaller",
+    # gui
+    "PyQt5",
+    "qasync",
+    "pyqt5-stubs",
+    "jupyter",
+    "fastapi[all]",
+    "uvicorn",
+    "pyyaml",
+    "rich",
+    "typer",
+]
