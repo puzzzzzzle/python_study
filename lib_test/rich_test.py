@@ -6,6 +6,8 @@ from rich.console import Console
 from rich.traceback import install
 from rich import print as rich_print
 from rich.logging import RichHandler
+from rich.highlighter import RegexHighlighter
+from rich.theme import Theme
 
 app = typer.Typer()
 
@@ -72,8 +74,12 @@ def test_logging():
         level=logging.DEBUG,
         format="%(message)s",
         datefmt="[%X]",
-        handlers=[RichHandler(rich_tracebacks=True,
-                              tracebacks_show_locals=True)]
+        handlers=[RichHandler(
+            rich_tracebacks=True,
+            console=Console(width=150, force_terminal=True), # force_terminal=True PyCharm默认不是tty, 不会有颜色
+            log_time_format="[%X]",
+            enable_link_path=False, # pycharm 运行时会混乱
+        )]
     )
     logger = logging.getLogger("test_logging")
     logger.info(f"logger from rich")
