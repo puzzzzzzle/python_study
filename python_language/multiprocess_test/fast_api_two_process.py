@@ -1,12 +1,12 @@
 import uuid
 import asyncio
+from contextlib import asynccontextmanager
+
 from rich.console import Console
 
 from fastapi import FastAPI
 from multiprocessing import Process, Manager
 import uvicorn
-
-app = FastAPI()
 
 console = Console()
 manager = Manager()
@@ -14,6 +14,39 @@ task_queue = manager.Queue()
 result_dict = manager.dict()
 # 用于存放 asyncio.Future，key为task_id
 future_dict = {}
+
+
+async def result_listener():
+    """在A进程中运行，监听B进程处理结果，唤醒协程"""
+    console.print("start result listener")
+    while True:
+        try:
+            task_id, result = result_dict.popitem()
+        except KeyError:
+            await asyncio.sleep(0.1)
+            continue
+        try:
+            fut = future_dict.pop(task_id, None)
+            if fut:
+                # 需要在主线程事件循环中设置结果
+                loop = asyncio.get_event_loop()
+                if not loop.is_closed():
+                    loop.call_soon_threadsafe(fut.set_result, result)
+        except Exception as e:
+            console.print_exception()
+            continue
+
+
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    # 启动时执行
+    console.print("start server")
+    asyncio.create_task(result_listener())
+    yield
+    # 关闭时清理逻辑可以放在这里
+
+
+app = FastAPI(lifespan=lifespan)
 
 
 @app.get("/process")
@@ -53,35 +86,6 @@ def start_worker():
     p = Process(target=worker, args=(task_queue, result_dict))
     p.start()
     return p
-
-async def result_listener():
-    """在A进程中运行，监听B进程处理结果，唤醒协程"""
-    while True:
-        try:
-            task_id, result = result_dict.popitem()
-        except KeyError:
-            await asyncio.sleep(0.1)
-            continue
-        try:
-            fut = future_dict.pop(task_id, None)
-            if fut:
-                # 需要在主线程事件循环中设置结果
-                loop = asyncio.get_event_loop()
-                if not loop.is_closed():
-                    loop.call_soon_threadsafe(fut.set_result, result)
-        except Exception as e:
-            console.print_exception()
-            continue
-
-async def result_listener_wrapper():
-    """包装器函数用于启动监听任务"""
-    await result_listener()
-
-# 启动结果监听协程
-@app.on_event("startup")
-async def startup_event():
-    # 在事件循环启动后创建任务
-    asyncio.create_task(result_listener())
 
 
 def start_server():
