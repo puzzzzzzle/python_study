@@ -1,9 +1,7 @@
 import uuid
 import asyncio
 from contextlib import asynccontextmanager
-
 from rich.console import Console
-
 from fastapi import FastAPI
 from multiprocessing import Process, Manager
 import uvicorn
@@ -17,7 +15,7 @@ future_dict = {}
 
 
 async def result_listener():
-    """在A进程中运行，监听B进程处理结果，唤醒协程"""
+    """唤醒协程"""
     console.print("start result listener")
     while True:
         try:
@@ -62,9 +60,16 @@ async def process(data: int):
     task_queue.put((task_id, data))
 
     # 等待结果
-    result = await fut
-    console.print(f"get result: {result}")
-    return {"result": result}
+    # 等待结果（设置5秒超时）
+    try:
+        result = await asyncio.wait_for(fut, timeout=5.0)
+        console.print(f"get result: {result}")
+        return {"result": result}
+    except asyncio.TimeoutError:
+        # 超时后清理future
+        future_dict.pop(task_id, None)
+        console.print(f"[red]Timeout for task {task_id}[/red]")
+        return {"error": "Processing timeout"}, 504
 
 
 ### worker
