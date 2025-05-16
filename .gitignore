@@ -11,3 +11,4 @@ ffi_test/swig_test/cpp_code/cpp_gen
 /instance
 cpp
 *.pyc
+lib_test/database.db

@@ -44,4 +44,10 @@ dependencies = [
     "rich",
     "typer",
     "tqdm",
+
+    # sql/data
+    "sqlmodel",
+    "sqlalchemy",
+    "pydantic",
+    "alembic",
 ]
